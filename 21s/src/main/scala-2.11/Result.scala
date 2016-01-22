@@ -1,9 +1,16 @@
-
 sealed trait Result
 
-case object NOT_BLACKJACK extends Result
+case object IN_PLAY extends Result
 
-sealed trait WIN extends Result
+case object STOPPED extends Result
 
-case object BLACKJACK extends WIN
+sealed trait EndResult extends Result
+
+case object BLACKJACK extends EndResult
+
+case object WON extends EndResult
+
+case object LOST extends EndResult
+
+
 

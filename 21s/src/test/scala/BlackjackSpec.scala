@@ -1,17 +1,18 @@
 import org.scalatest.{FreeSpec, Matchers}
 
+import scalaz.NonEmptyList
+
 class BlackjackSpec extends FreeSpec with Matchers {
-  "blackjack is " in {
+  "blackjack is " - {
     "a score of 21 with only 2 cards" in {
-      Blackjack.evaluate(11 :: 10 :: Nil).outcome should be(BLACKJACK)
+      Game.blackjack(Hand(NonEmptyList(11, 10))).state should be(BLACKJACK)
     }
     "a score of anything other than 21 with 2 cards is not blackjack" in {
-      Blackjack.evaluate(11 :: 1 :: Nil).outcome should be(NOT_BLACKJACK)
+      Game.blackjack(Hand(NonEmptyList(11, 1))).state should be(IN_PLAY)
     }
-    "a hand of anything other than exactly 2 cards is not blackjack" in {
-      Blackjack.evaluate(Nil).outcome should be(NOT_BLACKJACK)
-      Blackjack.evaluate(9 :: Nil).outcome should be(NOT_BLACKJACK)
-      Blackjack.evaluate(9 :: 10 :: 2 :: Nil).outcome should be(NOT_BLACKJACK)
+    "a hand with a score of 21 with more or less than 2 cards is not blackjack" in {
+      Game.blackjack(Hand(NonEmptyList(9))).state should be(IN_PLAY)
+      Game.blackjack(Hand(NonEmptyList(9, 10, 2))).state should be(IN_PLAY)
     }
   }
 }
