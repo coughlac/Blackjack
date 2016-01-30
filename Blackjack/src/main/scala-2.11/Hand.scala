@@ -1,11 +1,12 @@
 
-case class Hand(card1: Int, card2: Int, drawnCards: Option[List[Int]] = None) {
+
+case class Hand(dealtCards: List[Int]) {
   private val blackjack = 21
 
-  def score: Int = card1 + card2
+  def score: Int = dealtCards.sum
 
-  def hasBlackjack = score == blackjack
+  def hasBlackjack = cards == 2 && score == blackjack
 
-  def cards = drawnCards.fold(2)(cs => 2 + cs.sum)
+  def cards = dealtCards.size
 }
 
