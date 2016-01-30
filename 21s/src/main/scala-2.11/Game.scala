@@ -1,8 +1,27 @@
 
-
-case class GameState(dealer: HandWithState, player: HandWithState)
-
 object Game {
+  def dealerStartsGame(generator: () => GameState) : GameState = generator()
+
+  def blackjack(handWithState: HandWithState): HandWithState = {
+    if (handWithState.hand.blackjack)
+      updateState(handWithState, BLACKJACK)
+    else
+      handWithState
+  }
+
+  def initalBlackjackCheck(gameState: GameState): GameState = {
+    def dealerCheck: GameState = {
+      Game.blackjack(gameState.dealer) match {
+        case HandWithState(_, BLACKJACK) => dealerBlackjack(gameState)
+        case HandWithState(_ , _)        => gameState
+      }
+    }
+    Game.blackjack(gameState.player) match {
+      case HandWithState(_, BLACKJACK) => playerBlackjack(gameState)
+      case HandWithState(_ , _)        => dealerCheck
+    }
+  }
+
   def dealerTakesACard(game: GameState): GameState = {
     val dealer = game.dealer
     val player = game.player
@@ -10,7 +29,7 @@ object Game {
 
     def dealersTurn: GameState = {
       dealer match {
-        case HandWithState(_, _:EndResult)                                  =>
+        case HandWithState(_, _: EndResult)                                 =>
           game
         case HandWithState(dealersHand, IN_PLAY) if dealersHand.over21Score =>
           game.copy(dealer = updateState(game.dealer, LOST), game.player)
@@ -28,11 +47,11 @@ object Game {
     }
   }
 
-  def blackjack(hand: Hand): HandWithState = {
-    if (hand.count == 2 && hand.score == 21)
-      HandWithState(hand, BLACKJACK)
-    else
-      HandWithState(hand, IN_PLAY)
+  def isOver(gameState: GameState) : Boolean = {
+    gameState match {
+      case GameState(dealer, player) if dealer.state == IN_PLAY && player.state == IN_PLAY => false
+      case _                                                                               => true
+    }
   }
 
   def dealAPlayerACard(player: HandWithState): HandWithState = player match {
@@ -43,15 +62,25 @@ object Game {
     case HandWithState(hand, IN_PLAY) if hand.over21Score         => updateState(player, LOST)
   }
 
-//  private def dealerLost(game: GameState) : GameState = game.copy(
-//    dealer = updateState(game.dealer, LOST),
-//    player = updateState(game.player, WIN)
-//  )
-//
-//  private def dealerWon(game: GameState) : GameState = game.copy(
-//    dealer = updateState(game.dealer, WIN),
-//    player = updateState(game.player, LOST)
-//  )
+  private def dealerLost(gameState: GameState) : GameState = gameState.copy(
+    dealer = updateState(gameState.dealer, LOST),
+    player = updateState(gameState.player, WON)
+  )
+
+  private def dealerWon(game: GameState) : GameState = game.copy(
+    dealer = updateState(game.dealer, WON),
+    player = updateState(game.player, LOST)
+  )
+
+  private def playerBlackjack(game: GameState) : GameState = game.copy(
+    dealer = updateState(game.dealer, LOST),
+    player = updateState(game.player, BLACKJACK)
+  )
+
+  private def dealerBlackjack(game: GameState) : GameState = game.copy(
+    dealer = updateState(game.dealer, BLACKJACK),
+    player = updateState(game.player, LOST)
+  )
 
   private def updateState(handWithState: HandWithState, value: Result): HandWithState =
     handWithState.copy(state = value)
