@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="60a52a90-3fbd-4c51-8f77-ff30b823970a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.11/classes/Hand.class" afterPath="$PROJECT_DIR$/target/scala-2.11/classes/Hand.class" />
+    <list default="true" id="60a52a90-3fbd-4c51-8f77-ff30b823970a" name="Default" comment="A Player has lost the game if their total is higher than 21 &#10;">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala-2.11/Hand.scala" afterPath="$PROJECT_DIR$/src/main/scala-2.11/Hand.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala-2.11/Game.scala" afterPath="$PROJECT_DIR$/src/main/scala-2.11/Game.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala-2.11/GameSpec.scala" afterPath="$PROJECT_DIR$/src/test/scala-2.11/GameSpec.scala" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -45,8 +44,8 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.16926503">
-              <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.63474387">
+              <caret line="15" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -66,7 +65,7 @@
         <entry file="file://$PROJECT_DIR$/src/test/scala-2.11/GameSpec.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="48" column="48" selection-start-line="48" selection-start-column="48" selection-end-line="48" selection-end-column="48" />
+              <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -86,7 +85,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/scala-2.11/Game.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
+              <caret line="48" column="21" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="21" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -108,7 +107,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/scala-2.11/Hand.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+              <caret line="11" column="13" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -167,8 +166,8 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/test/scala/DealerSpec.scala" />
         <option value="$PROJECT_DIR$/src/main/scala-2.11/Dealer.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala-2.11/Game.scala" />
         <option value="$PROJECT_DIR$/src/main/scala-2.11/Hand.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala-2.11/Game.scala" />
         <option value="$PROJECT_DIR$/src/test/scala-2.11/GameSpec.scala" />
       </list>
     </option>
@@ -653,18 +652,6 @@
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="TestHistory">
-    <history-entry file="GameSpec - 2016.01.30 at 12h 30m 34s.xml">
-      <configuration name="GameSpec" configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="GameSpec - 2016.01.30 at 12h 39m 48s.xml">
-      <configuration name="GameSpec" configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="GameSpec - 2016.01.30 at 12h 40m 31s.xml">
-      <configuration name="GameSpec" configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="GameSpec - 2016.01.30 at 13h 56m 26s.xml">
-      <configuration name="GameSpec" configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
     <history-entry file="GameSpec - 2016.01.30 at 14h 02m 27s.xml">
       <configuration name="GameSpec" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
@@ -683,6 +670,18 @@
     <history-entry file="GameSpec - 2016.01.30 at 14h 13m 58s.xml">
       <configuration name="GameSpec" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
+    <history-entry file="GameSpec - 2016.01.30 at 16h 04m 12s.xml">
+      <configuration name="GameSpec" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="GameSpec - 2016.01.30 at 16h 49m 43s.xml">
+      <configuration name="GameSpec" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="GameSpec - 2016.01.30 at 16h 53m 32s.xml">
+      <configuration name="GameSpec" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="GameSpec - 2016.01.30 at 16h 55m 17s.xml">
+      <configuration name="GameSpec" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="0" />
@@ -698,6 +697,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980132" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26037195" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980132" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -706,7 +706,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980132" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -751,7 +750,8 @@
     <MESSAGE value="The game is won if either player or dealer has blackjack with initial hand of 2 cards each&#10;" />
     <MESSAGE value="if neither player has blackjack then the player can start drawing cards from the top of the deck" />
     <MESSAGE value="A Player should stop drawing cards from the deck if their total reaches 17 or higher" />
-    <option name="LAST_COMMIT_MESSAGE" value="A Player should stop drawing cards from the deck if their total reaches 17 or higher" />
+    <MESSAGE value="A Player has lost the game if their total is higher than 21 &#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="A Player has lost the game if their total is higher than 21 &#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -863,10 +863,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala-2.11/Game.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="48" column="21" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala-2.11/Hand.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -874,18 +884,8 @@
     <entry file="file://$PROJECT_DIR$/src/test/scala-2.11/GameSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="48" selection-start-line="48" selection-start-column="48" selection-end-line="48" selection-end-column="48" />
+          <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala-2.11/Game.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -894,8 +894,8 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16926503">
-          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.63474387">
+          <caret line="15" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding />
         </state>
       </provider>
