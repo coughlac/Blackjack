@@ -1,26 +1,6 @@
 import scala.annotation.tailrec
 import scala.util.Random
 
-sealed trait HandState
-
-object Lost extends HandState
-
-object Won extends HandState
-
-object Stick extends HandState
-
-object InPlay extends HandState
-
-sealed trait GameState
-
-object Playing extends GameState
-
-object Over extends GameState
-
-case class GameWithState(dealer: HandWithState, player: HandWithState, state: GameState)
-
-case class HandWithState(hand: Hand, state: HandState)
-
 object Game {
   @tailrec
   def playerTakesTurn(player: HandWithState): HandWithState =
