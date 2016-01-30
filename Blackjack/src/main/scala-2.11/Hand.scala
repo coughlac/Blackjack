@@ -1,19 +1,9 @@
-import scalaz.NonEmptyList
 
-case class Hand(cards:  NonEmptyList[Int]) {
-  def score: Int = cards.list.sum
+case class Hand(card1: Int, card2: Int) {
+  private val blackjack = 21
 
-  def count: Int = cards.size
+  def score: Int = card1 + card2
 
-  def under17Score: Boolean = score < 17
-
-  def over21Score: Boolean = score > 21
-
-  def between17and21Score: Boolean = !over21Score && !under17Score
-
-  def notOver21Score: Boolean = !over21Score
-
-  def blackjack: Boolean = count == 2 && score == 21
+  def hasBlackjack = score == blackjack
 }
-case class HandWithState(hand: Hand, state: Result)
 
