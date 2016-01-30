@@ -5,8 +5,10 @@ case class Hand(dealtCards: List[Int]) {
 
   def score: Int = dealtCards.sum
 
-  def hasBlackjack = cards == 2 && score == blackjack
+  def cards: Int = dealtCards.size
 
-  def cards = dealtCards.size
+  def hasBlackjack: Boolean = cards == 2 && score == blackjack
+
+  def hasLost: Boolean = score > blackjack
 }
 

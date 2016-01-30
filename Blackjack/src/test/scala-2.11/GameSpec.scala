@@ -45,5 +45,9 @@ class GameSpec extends FreeSpec with Matchers {
       val playersHandGreaterThan17 = Hand(5 :: 4 :: 10 :: Nil)
       playersHandGreaterThan17 shouldBe Game.playerTakesTurn(playersHandGreaterThan17)
     }
+    "looses the game if their score is over 21" in {
+      val playersHandOver21 = Hand(3 :: 4 :: 10 :: 5 :: Nil)
+      assert(playersHandOver21.hasLost)
+    }
   }
 }
