@@ -2,80 +2,102 @@ import org.scalatest.{FreeSpec, Matchers}
 
 class GameSpec extends FreeSpec with Matchers {
   "The game is won if either of the two initial hands is blackjack " in {
-    Game.isWon(Hand(10 :: 3 :: Nil), Hand(10 :: 11 :: Nil)) shouldBe true
-    Game.isWon(Hand(11 :: 10 :: Nil), Hand(10 :: 1 :: Nil)) shouldBe true
+    Game.blackjack(dealInitialHand(10, 3), dealInitialHand(10, 11)).state shouldBe Over
+    Game.blackjack(dealInitialHand(11, 10), dealInitialHand(10, 1)).state shouldBe Over
 
-    Game.isWon(Hand(9 :: 10 :: Nil), Hand(10 :: 1 :: Nil)) shouldBe false
+    Game.blackjack(dealInitialHand(9, 10), dealInitialHand(10, 1)).state shouldBe Playing
   }
 
   "The player " - {
     "can start drawing cards if neither player has blackjack" in {
-      val dealersInitialHand = Hand(1 :: 2 :: Nil)
-      val playersInitialHand = Hand(3 :: 4 :: Nil)
+      val dealersInitialHand = dealInitialHand(1, 2)
+      val playersInitialHand = dealInitialHand(3, 4)
 
-      val (_, playersHand) = Game.playerDrawsACard(dealersInitialHand, playersInitialHand)
+      val gameWithState = Game.play(dealersInitialHand, playersInitialHand)
 
-      playersHand.cards should equal(playersInitialHand.cards + 1)
+      gameWithState.state should be(Playing)
+      assert(gameWithState.player.hand.cards > playersInitialHand.hand.cards)
     }
     "cannot start drawing cards if the player already has blackjack" in {
-      val dealersInitialHand = Hand(1 :: 2 :: Nil)
-      val blackjackHand = Hand(11 :: 10 :: Nil)
+      val dealersInitialHand = dealInitialHand(1, 2)
+      val blackjackHand = dealInitialHand(11, 10)
 
-      val (_, playersBlackjackHand) = Game.playerDrawsACard(dealersInitialHand, blackjackHand)
+      val gameWithState = Game.play(dealersInitialHand, blackjackHand)
 
-      playersBlackjackHand.cards shouldEqual blackjackHand.cards
+      gameWithState.state should be(Over)
+
+      gameWithState.dealer.state should be(Lost)
+      gameWithState.player.state should be(Won)
     }
     "cannot start drawing cards if the dealer already has blackjack" in {
-      val blackjackHand = Hand(11 :: 10 :: Nil)
-      val playersInitialHand = Hand(3 :: 4 :: Nil)
+      val blackjackHand = dealInitialHand(11, 10)
+      val playersInitialHand = dealInitialHand(3, 4)
 
-      val (dealersBlackjackHand, _) = Game.playerDrawsACard(blackjackHand, playersInitialHand)
+      val gameWithState = Game.play(blackjackHand, playersInitialHand)
 
-      dealersBlackjackHand.cards shouldEqual blackjackHand.cards
+      gameWithState.state should be(Over)
+
+      gameWithState.dealer.state should be(Won)
+      gameWithState.player.state should be(Lost)
     }
     "draws cards until their score is 17 or higher" in {
       val playersInitialHand = dealInitialHand(3, 4)
 
-      val handWithState = Game.playerTakesTurn(playersInitialHand)
+      val handWithState = Player.takesTurn(playersInitialHand)
 
-      handWithState.state shouldBe Stick
-      assert(handWithState.hand.score >= 17)
+      assert(handWithState.score >= 17)
     }
     "stops drawing cards if their score is 17 or higher" in {
       val playersHandOf17 = dealInitialHand(10, 7)
 
-      val playersHandAfterTurn = Game.playerTakesTurn(playersHandOf17)
+      val playersHandAfterTurn = Player.takesTurn(playersHandOf17)
 
       playersHandAfterTurn.state shouldBe Stick
-      playersHandAfterTurn.hand.score shouldBe playersHandOf17.hand.score
+      playersHandAfterTurn.score shouldBe playersHandOf17.score
     }
     "stops drawing cards if their score is greater than 17" in {
       val playersHandGreaterThan17 = dealInitialHand(10, 9)
 
-      val playersHandAfterTurn = Game.playerTakesTurn(playersHandGreaterThan17)
+      val playersHandAfterTurn = Player.takesTurn(playersHandGreaterThan17)
 
       playersHandAfterTurn.state shouldBe Stick
-      playersHandAfterTurn.hand.score shouldBe playersHandGreaterThan17.hand.score
+      playersHandAfterTurn.score shouldBe playersHandGreaterThan17.score
     }
     "looses the game if their score is over 21" in {
       val playersHandGreaterThan21 = dealInPlayHand(3 :: 5 :: 6 :: 10 :: Nil)
 
-      val handWithState = Game.playerTakesTurn(playersHandGreaterThan21)
+      val handWithState = Player.takesTurn(playersHandGreaterThan21)
 
       handWithState.state shouldBe Lost
-      assert(handWithState.hand.score > 21)
+      assert(handWithState.score > 21)
     }
   }
   "The dealer" - {
-    " can start drawing cards when the player has finished drawing cards and has not lost" in {
+    "can start drawing cards when the player has finished drawing cards and has not lost" in {
       val dealersHand = dealInitialHand(1, 2)
       val playersHand = dealStickHand
-      val gameState = Game.dealerDrawsACard(dealersHand, playersHand)
+      val gameState = Dealer.takesATurn(GameWithState(dealersHand, playersHand, Playing))
 
-      gameState.dealer.state shouldBe InPlay
-      gameState.dealer.hand.cards shouldBe dealersHand.hand.cards + 1
+      assert(gameState.dealer.score > dealersHand.score)
 
-      gameState.player shouldBe playersHand
+      gameState.player.score shouldBe playersHand.score
+    }
+    "cannot start drawing cards when the player has finished drawing cards but has lost" in {
+      val dealersHand = dealInitialHand(1, 2)
+      val playersHand = dealLostHand
+      val gameState = Dealer.takesATurn(GameWithState(dealersHand, playersHand, Playing))
+
+      gameState.dealer.score shouldBe dealersHand.score
+      gameState.state shouldBe Over
+    }
+    "stops drawing cards when their total is higher than the Player" in {
+      val dealersHand = dealInPlayHand(1 :: 11 :: 7 :: Nil)
+      val playersHand = dealStickHand
+      val gameState = Dealer.takesATurn(GameWithState(dealersHand, playersHand, Playing))
+
+      gameState.dealer.score shouldBe dealersHand.score
+      gameState.player.score shouldBe playersHand.score
+      gameState.state shouldBe Over
     }
   }
 
@@ -87,4 +109,7 @@ class GameSpec extends FreeSpec with Matchers {
 
   private def dealStickHand: HandWithState =
     HandWithState(Hand(10 :: 3 :: 5 :: Nil), Stick)
+
+  private def dealLostHand: HandWithState =
+    HandWithState(Hand(10 :: 7 :: 5 :: Nil), Lost)
 }

@@ -1,35 +1,23 @@
-import scala.annotation.tailrec
-import scala.util.Random
+
 
 object Game {
-  @tailrec
-  def playerTakesTurn(player: HandWithState): HandWithState =
-    if (player.hand.score > 21)
-      player.copy(state = Lost)
-    else if (player.hand.score >= 17)
-      player.copy(state = Stick)
-    else
-      playerTakesTurn(HandWithState(dealACard(player.hand), InPlay))
-
-
-  def playerDrawsACard(dealer: Hand, player: Hand) =
-    if (isWon(dealer, player))
-      (dealer, player)
-    else
-      (dealer, dealACard(player))
-
-  def dealerDrawsACard(dealer: HandWithState, player: HandWithState): GameWithState =
-    player.state match {
-      case Stick =>
-        GameWithState(HandWithState(dealACard(dealer.hand), InPlay), player, Playing)
-      case _     => GameWithState(dealer, player, Over)
+  def play(dealer: HandWithState, player: HandWithState): GameWithState = {
+    val gameWithState = blackjack(dealer, player)
+    gameWithState.state match {
+      case Over => gameWithState
+      case _    => GameWithState(dealer, Player.takesTurn(player), Playing)
     }
+  }
 
-  def isWon(dealer: Hand, player: Hand): Boolean =
-    player.hasBlackjack || dealer.hasBlackjack
+  def blackjack(dealer: HandWithState, player: HandWithState): GameWithState = {
+    val playerHasBlackJack = HandWithState.hasBlackjack(player)
+    val dealerHasBlackJack = HandWithState.hasBlackjack(dealer)
 
-  private def dealACard(hand: Hand) =
-    hand.copy(
-      dealtCards = Random.nextInt(11) :: hand.dealtCards
-    )
+    if (playerHasBlackJack.state == Won)
+      GameWithState(dealerHasBlackJack.copy(state = Lost), playerHasBlackJack, Over)
+    else if (dealerHasBlackJack.state == Won)
+      GameWithState(dealerHasBlackJack, playerHasBlackJack.copy(state = Lost), Over)
+    else
+      GameWithState(dealerHasBlackJack, playerHasBlackJack, Playing)
+  }
 }
