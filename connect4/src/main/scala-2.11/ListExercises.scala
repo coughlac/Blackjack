@@ -1,17 +1,22 @@
 import scala.annotation.tailrec
 
+//http://aperiodic.net/phil/scala/s-99/
 object ListExercises {
-  @tailrec
-  private def elementAt[A](elems: List[A], offsetFromEndOfList: Int): A = {
-    elems match {
-      case (head :: tail) if tail.length == offsetFromEndOfList => head
-      case (head :: tail)                                       => elementAt(tail, offsetFromEndOfList)
+
+  def elementAt[A](n: Int, elems: List[A]): A = {
+    @tailrec
+    def loop(n: Int, counter: Int, elems: List[A]): A = {
+      elems match {
+        case (head :: tail) if counter == n => head
+        case (head :: tail)                 => loop(n, counter + 1, tail)
+      }
     }
+    loop(n, 0, elems)
   }
 
-  def last[A](elems: List[A]): A = elementAt(elems, 0)
+  def last[A](elems: List[A]): A = elementAt(elems.length - 1, elems)
 
-  def penultimate[A](elems: List[A]): A = elementAt(elems, 1)
+  def penultimate[A](elems: List[A]): A = elementAt(elems.length - 2, elems)
 
   def flatten(values: List[_]): List[Any] = {
     def flattenOneTier(elems: List[_]): List[Any] = {
