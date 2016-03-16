@@ -8,7 +8,7 @@ object ListExercises {
     def loop(n: Int, counter: Int, elems: List[A]): A = {
       elems match {
         case (head :: tail) if counter == n => head
-        case (head :: tail)                 => loop(n, counter + 1, tail)
+        case (head :: tail) => loop(n, counter + 1, tail)
       }
     }
     loop(n, 0, elems)
@@ -23,22 +23,34 @@ object ListExercises {
     def loop(n: Int, elems: List[A]): Int = {
       elems match {
         case (head :: tail) if tail.isEmpty => n
-        case (head :: tail)                 => loop(n + 1, tail)
+        case (head :: tail) => loop(n + 1, tail)
       }
     }
     loop(1, elems)
+  }
+
+  def reverse[A](elems: List[A]): List[A] = {
+    @tailrec
+    def loop(n: Int, length: Int, elems: List[A], reversedList: List[A]): List[A] = {
+      elems match {
+        case _ if n == length  => reversedList
+        case _ =>
+          loop(n + 1, length, elems, elementAt(n, elems) :: reversedList)
+      }
+    }
+    loop(0, length(elems), elems, Nil)
   }
 
   def flatten(values: List[_]): List[Any] = {
     def flattenOneTier(elems: List[_]): List[Any] = {
       elems.foldLeft(List.empty[Any])((acc, elems) => elems match {
         case as: List[_] => acc ::: as
-        case a           => a :: acc
+        case a => a :: acc
       })
     }
     values.foldLeft(List.empty[Any])((acc, elems) => elems match {
       case as: List[_] => acc ::: flattenOneTier(as)
-      case a           => a :: acc
+      case a => a :: acc
     })
   }
 }
