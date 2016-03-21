@@ -74,4 +74,23 @@ object ListExercises {
 
     loop(elems.tail, elems.head :: Nil)
   }
+
+  def pack(elems: List[_]): List[_]  = {
+    @tailrec
+    def loop(es: List[_], acc: List[_], acc2: List[List[_]]): List[List[_]] = {
+      if (es.isEmpty)
+        (acc :: acc2).reverse
+      else
+      {
+        val head = es.head
+        val tail = es.tail
+        if (acc.head == head)
+          loop(tail, head :: acc, acc2)
+        else
+          loop(tail, head :: Nil, acc :: acc2)
+      }
+    }
+
+    loop(elems.tail, elems.head :: Nil, Nil)
+  }
 }
