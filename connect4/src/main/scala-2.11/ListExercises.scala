@@ -75,7 +75,7 @@ object ListExercises {
     loop(elems.tail, elems.head :: Nil)
   }
 
-  def pack(elems: List[_]): List[_]  = {
+  def pack(elems: List[_]): List[List[_]] = {
     @tailrec
     def loop(es: List[_], acc: List[_], acc2: List[List[_]]): List[List[_]] = {
       if (es.isEmpty)
@@ -92,5 +92,19 @@ object ListExercises {
     }
 
     loop(elems.tail, elems.head :: Nil, Nil)
+  }
+
+  def encode(elems: List[_]): List[_]  = {
+    val listsOfSameElement: List[List[_]] = pack(elems)
+    def loop[A](elems: List[List[_]], acc: List[(Int, A)]): List[(Int, _)] = {
+      if (elems.isEmpty)
+        acc.reverse
+      else{
+        val subList = elems.head
+        loop(elems.tail, (length(subList), subList.head) :: acc)
+      }
+    }
+    loop(listsOfSameElement, Nil)
+    //listsOfSameElement.map(elems => (length(elems), elems.head))
   }
 }
