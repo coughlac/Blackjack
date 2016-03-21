@@ -43,16 +43,17 @@ object ListExercises {
 
   def isPalindrome[A](elems: List[A]): Boolean = elems == elems.reverse
 
-  def flatten(values: List[_]): List[Any] = {
-    def flattenOneTier(elems: List[_]): List[Any] = {
-      elems.foldLeft(List.empty[Any])((acc, elems) => elems match {
-        case as: List[_] => acc ::: as
-        case a => a :: acc
-      })
+  def flatten(elems: List[_]): List[Any] = {
+    def loop(elems: List[_], acc :List[_]):List[_] =
+      if (elems.isEmpty)
+        acc
+      else
+        elems.head match {
+        case as: List[_] =>
+          loop(elems.tail, loop(as, acc))
+        case a => loop(elems.tail, a :: acc)
     }
-    values.foldLeft(List.empty[Any])((acc, elems) => elems match {
-      case as: List[_] => acc ::: flattenOneTier(as)
-      case a => a :: acc
-    })
+
+    loop(elems, Nil).reverse
   }
 }
