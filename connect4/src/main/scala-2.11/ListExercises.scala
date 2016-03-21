@@ -43,7 +43,7 @@ object ListExercises {
 
   def isPalindrome[A](elems: List[A]): Boolean = elems == elems.reverse
 
-  def flatten(elems: List[_]): List[Any] = {
+  def flatten(elems: List[_]): List[_] = {
     def loop(elems: List[_], acc :List[_]):List[_] =
       if (elems.isEmpty)
         acc
@@ -53,7 +53,25 @@ object ListExercises {
           loop(elems.tail, loop(as, acc))
         case a => loop(elems.tail, a :: acc)
     }
-
     loop(elems, Nil).reverse
+  }
+
+  def compress[A](elems: List[A]): List[A]  = {
+    @tailrec
+    def loop(es: List[A], acc: List[A]): List[A] = {
+      if (es.isEmpty)
+        acc.reverse
+      else
+      {
+        val head = es.head
+        val tail = es.tail
+        if (acc.head == head)
+          loop(tail, acc)
+        else
+          loop(tail, head :: acc)
+      }
+    }
+
+    loop(elems.tail, elems.head :: Nil)
   }
 }
