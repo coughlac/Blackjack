@@ -1,0 +1,1 @@
+case class Constituency(name: String)

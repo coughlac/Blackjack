@@ -1,7 +1,5 @@
 
 object ElectionResults {
-  def parse(data: String): ConstituencyResult = {
-    val values: List[String] = data.split(",").toList
-    ConstituencyResult(values.head)
-  }
+  def parse(data: String): Constituency =
+    Constituency(data.split(",").toList.head)
 }
